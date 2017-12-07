@@ -1,0 +1,26 @@
+{
+  "name": "tags_node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tags.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "dateformat": "1.0.11",
+    "express": "4.12.3",
+    "express-favicon": "1.0.0",
+    "body-parser": "1.12.0",
+    "morgan": "1.5.1",
+    "method-override": "2.3.0",
+    "node-uuid": "1.4.3",
+    "serve-favicon": "2.2.0",
+    "mocha": "2.2.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha"
+  },
+  "author": "Alex Martin",
+  "license": "ISC"
+}
