@@ -84,11 +84,10 @@ app.delete('/remixId/:remixId/id/:id', function(req, res) {
 //******************************************************************************
 
 function parseUpdateRequestIntoObject(req, remixId, id) {
-	var data = new Object(); 
+	var data = req.body;
 	data.id = id;
-	data.text = req.body.text;
 	data.remixId = remixId;
-	console.log(JSON.stringify(data));
+	//console.log("Object: " + JSON.stringify(data));
 	return data; 
 }
 

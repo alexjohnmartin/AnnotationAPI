@@ -22,8 +22,8 @@ All notes are stored in a notes.json file in the root of the project. This sourc
 ## POST (add) a new note
 * HTTP POST
 * http://localhost:3000/remixId/remix-id-goes-here
-* Headers: Content-Type = application/x-www-form-urlencoded
-* Body: "text=My+note+text+goes+here."
+* Headers: Content-Type = application/json
+* Body: "{"id":"b4023fb0-db12-11e7-b590-9dedcddba9be","remixId":"G009SVNBZ74W","text":"This is a Remix 3D note.","ModelPoint":{"X":1.0,"Y":2.0,"Z":3.0},"ModelNormal":{"X":1.0,"Y":2.0,"Z":3.0}}"
 
 ## PUT (update) an existing note
 * HTTP PUT
