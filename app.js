@@ -1,10 +1,7 @@
-var express = require('express')
-  , http = require('http')
-  , path = require('path');
-
-var fs = require('fs'); 
-var app = express();
-var http = require('http');
+var express = require('express');
+//var http = require('http');
+//var path = require('path');
+var fs = require('fs');
 var guid = require('node-uuid');
 
 // server.js (Express 4.0)
@@ -14,14 +11,14 @@ var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var app            = express();
 
-app.use(express.static(__dirname + '/public'));     // set the static files location /public/img will be /img for users
-app.use(morgan('dev'));                     // log every request to the console
-app.use(bodyParser.urlencoded({ extended: false }))    // parse application/x-www-form-urlencoded
-app.use(bodyParser.json())    // parse application/json
-app.use(methodOverride());                  // simulate DELETE and PUT
+app.use(express.static(__dirname + '/public'));     	// set the static files location /public/img will be /img for users
+app.use(morgan('dev'));                     			// log every request to the console
+app.use(bodyParser.urlencoded({ extended: false }))    	// parse application/x-www-form-urlencoded
+app.use(bodyParser.json())    							// parse application/json
+app.use(methodOverride());                  			// simulate DELETE and PUT
 
 app.listen(3000);
-console.log('Magic happens on port 3000');          // shoutout to the user
+console.log('Magic happens on port 3000');          	// shoutout to the user
 
 var notes = [];
 var file_path = "notes.json";
@@ -46,36 +43,66 @@ app.get('/', function(req, res) {
 //******************************************************************************
 
 app.post('/remixId/:remixId', function(req, res) {
+	var found = false;
 	var data = parseUpdateRequestIntoObject(req, req.params.remixId, guid.v1()); 
-	notes.push(data);
-	saveNotes();
-    res.writeHead(200, {'id': data.id});
-	res.end(JSON.stringify(data));
+
+	for (var i = 0; i < notes.length; i++) {
+		if (notes[i].id == req.params.id) {
+			found = true;
+		}
+	}
+
+	if (!found) {
+		notes.push(data);
+		saveNotes();
+	    res.writeHead(200, {'id': data.id});
+		res.end(JSON.stringify(data));
+	} else {
+		res.writeHead(405, {'id': req.params.id});
+		res.end("Note already exists, cannot overwrite. Please use PUT to update an existing note.");
+	}
 });
 
 app.put('/remixId/:remixId/id/:id', function(req, res) {
+	var found = false;
 	var data = parseUpdateRequestIntoObject(req, req.params.remixId, req.params.id); 
 	for (var i = 0; i < notes.length; i++) {
 		if (notes[i].id == req.params.id) {
 			notes[i] = data;
+			found = true;
 		}
 	}
-	saveNotes();
-    res.writeHead(200, {'id': req.params.id});
-	res.end(JSON.stringify(data));
+
+	if (found) {
+		saveNotes();
+	    res.writeHead(200, {'id': req.params.id});
+		res.end(JSON.stringify(data));
+	} else {
+		res.writeHead(404, {'id': req.params.id});
+		res.end();
+	}
 });
 
 app.delete('/remixId/:remixId/id/:id', function(req, res) {
+	var found = false;
 	var updatedNotes = []; 
 	for (var i = 0; i < notes.length; i++) {
 		if (notes[i].id != req.params.id) {
 			updatedNotes.push(notes[i]);
+		} else {			
+			found = true;
 		}
 	}
-	notes = updatedNotes;
-	saveNotes();
-    res.writeHead(200, {'id': req.params.id});
-	res.end('deleted');
+
+	if (found) 	{
+		notes = updatedNotes;
+		saveNotes();
+	    res.writeHead(200, {'id': req.params.id});
+		res.end('deleted');
+	} else {
+		res.writeHead(404, {'id': req.params.id});
+		res.end();
+	}
 });
 
 
@@ -121,7 +148,7 @@ function readNotes() {
 }
 
 //******************************************************************************
-//                          load from JSON file
+//                      startup - load from JSON file
 //******************************************************************************
 
 readNotes();
