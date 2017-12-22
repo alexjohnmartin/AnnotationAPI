@@ -45,7 +45,7 @@ app.post('/remixId/:remixId', function(req, res) {
 	var data = parseUpdateRequestIntoObject(req, req.params.remixId); 
 
 	for (var i = 0; i < notes.length; i++) {
-		if (notes[i].id == data.modelId) {
+		if (notes[i].id == data.noteId) {
 			found = true;
 		}
 	}
@@ -53,10 +53,10 @@ app.post('/remixId/:remixId', function(req, res) {
 	if (!found) {
 		notes.push(data);
 		saveNotes();
-	    res.writeHead(200, {'id': data.modelId});
+	    res.writeHead(200, {'id': data.noteId});
 		res.end(JSON.stringify(data));
 	} else {
-		res.writeHead(405, {'id': data.modelId});
+		res.writeHead(405, {'id': data.noteId});
 		res.end("Note already exists, cannot overwrite. Please use PUT to update an existing note.");
 	}
 });
@@ -110,7 +110,7 @@ app.delete('/remixId/:remixId/id/:id', function(req, res) {
 
 function parseUpdateRequestIntoObject(req, remixId, id) {
 	var data = req.body;
-	// data.id = id;
+	// data.noteId = id;
 	// data.remixId = remixId;
 	//console.log("Object: " + JSON.stringify(data));
 	return data; 
