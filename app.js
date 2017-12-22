@@ -45,7 +45,7 @@ app.post('/remixId/:remixId', function(req, res) {
 	var data = parseUpdateRequestIntoObject(req, req.params.remixId); 
 
 	for (var i = 0; i < notes.length; i++) {
-		if (notes[i].id == data.noteId) {
+		if (notes[i].noteId == data.noteId) {
 			found = true;
 		}
 	}
@@ -65,7 +65,7 @@ app.put('/remixId/:remixId/id/:id', function(req, res) {
 	var found = false;
 	var data = parseUpdateRequestIntoObject(req, req.params.remixId, req.params.id); 
 	for (var i = 0; i < notes.length; i++) {
-		if (notes[i].id == req.params.id) {
+		if (notes[i].noteId == req.params.id) {
 			notes[i] = data;
 			found = true;
 		}
@@ -85,7 +85,7 @@ app.delete('/remixId/:remixId/id/:id', function(req, res) {
 	var found = false;
 	var updatedNotes = []; 
 	for (var i = 0; i < notes.length; i++) {
-		if (notes[i].id != req.params.id) {
+		if (notes[i].noteId != req.params.id) {
 			updatedNotes.push(notes[i]);
 		} else {			
 			found = true;
