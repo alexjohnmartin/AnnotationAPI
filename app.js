@@ -42,10 +42,10 @@ app.get('/', function(req, res) {
 
 app.post('/remixId/:remixId', function(req, res) {
 	var found = false;
-	var data = parseUpdateRequestIntoObject(req, req.params.remixId, guid.v1()); 
+	var data = parseUpdateRequestIntoObject(req, req.params.remixId); 
 
 	for (var i = 0; i < notes.length; i++) {
-		if (notes[i].id == req.params.id) {
+		if (notes[i].id == data.modelId) {
 			found = true;
 		}
 	}
@@ -53,10 +53,10 @@ app.post('/remixId/:remixId', function(req, res) {
 	if (!found) {
 		notes.push(data);
 		saveNotes();
-	    res.writeHead(200, {'id': data.id});
+	    res.writeHead(200, {'id': data.modelId});
 		res.end(JSON.stringify(data));
 	} else {
-		res.writeHead(405, {'id': req.params.id});
+		res.writeHead(405, {'id': data.modelId});
 		res.end("Note already exists, cannot overwrite. Please use PUT to update an existing note.");
 	}
 });
@@ -110,8 +110,8 @@ app.delete('/remixId/:remixId/id/:id', function(req, res) {
 
 function parseUpdateRequestIntoObject(req, remixId, id) {
 	var data = req.body;
-	data.id = id;
-	data.remixId = remixId;
+	// data.id = id;
+	// data.remixId = remixId;
 	//console.log("Object: " + JSON.stringify(data));
 	return data; 
 }
