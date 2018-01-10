@@ -1,1 +1,22 @@
-[]
+[
+	{
+		"noteId": "6b257e0a-cbbc-4f52-9aed-9b996ffc770d",
+		"remixId": "Seagull.glb",
+		"text": "Why is his head so big?",
+		"modelPoint": {
+			"X": 0.004665196,
+			"Y": 0.375131667,
+			"Z": 0.167792141
+		},
+		"modelNormal": {
+			"X": 0.422553152,
+			"Y": -0.855544746,
+			"Z": 0.299152255
+		},
+		"viewAzimuth": 234.161362,
+		"viewElevation": 14.7051983,
+		"viewZoom": 2.6799984,
+		"audioHash": "fcd8cfa0e0d3c07e6454dea6f9dcfb98",
+		"inkHash": "69c22df4d1b742e3ef3cf1e0b73fc66a"
+	}
+]
